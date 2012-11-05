@@ -1,5 +1,6 @@
-package edu.rpi.tw.escience.waterquality.datatype;
+package edu.rpi.tw.escience.semanteco;
 
+import java.net.URI;
 import java.util.List;
 
 import com.hp.hpl.jena.ontology.OntModel;
@@ -13,52 +14,46 @@ import edu.rpi.tw.escience.waterquality.Resource;
 import edu.rpi.tw.escience.waterquality.SemantAquaUI;
 import edu.rpi.tw.escience.waterquality.query.Query;
 
-public class DataTypeModule implements Module {
+public class DomainModule implements Module {
 
 	private ModuleConfiguration config = null;
 	
 	@Override
 	public void visit(Model model, Request request) {
+		// does nothing
 	}
 
 	@Override
 	public void visit(OntModel model, Request request) {
+		// does nothing
 	}
 
 	@Override
 	public void visit(Query query, Request request) {
+		// does nothing
 	}
 
 	@Override
 	public void visit(SemantAquaUI ui, Request request) {
-		Resource res = config.getResource("data-type.js");
-		if(res != null) {
-			ui.addScript(res);
-		}
-		String responseStr = "<div id=\"DataTypeFacet\" class=\"facet no-rest\">";
-		List<Domain> domains = config.listDomains();
-		for(Domain i : domains) {
-			List<String> types = i.getDataTypes();
-			for(String j : types) {
-				String label = i.getDataTypeName(j);
-				Resource icon = i.getDataTypeIcon(j);
-				responseStr += "<input name=\"type\" type=\"checkbox\" checked=\"checked\"" +
-						"value=\""+j+"\" />";
-				responseStr += "<img height=\"12\" src=\""+icon.getPath()+"\" /> ";
-				responseStr += label;
+		String responseStr = "<div id=\"DomainFacet\" class=\"facet\">";
+		@SuppressWarnings("unchecked")
+		List<Domain> domains = (List<Domain>)request.getParam("available-domains");
+		if(domains != null) {
+			for(Domain i : domains) {
+				URI uri = i.getUri();
+				responseStr += "<input name=\"domain\" type=\"checkbox\" checked=\"checked\" value=\""+uri.toString()+"\" />";
+				responseStr += i.getLabel();
 				responseStr += "<br />";
 			}
 		}
 		responseStr += "</div>";
-		res = config.generateStringResource(responseStr);
-		if(res != null) {
-			ui.addFacet(res);
-		}
+		Resource res = config.generateStringResource(responseStr);
+		ui.addFacet(res);
 	}
 
 	@Override
 	public String getName() {
-		return "Icon Type";
+		return "Domain";
 	}
 
 	@Override
