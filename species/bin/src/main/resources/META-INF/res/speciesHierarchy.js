@@ -1,10 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
  /*jsonHier used to accept JSON*/
 var jsonHier;
 /*class_hierachy used to store nodes information*/
@@ -87,14 +80,12 @@ $(window).bind("initialize", function() {
 	/*get the root node by SpeciesDataProviderModule.queryeBirdTaxonomyRoots*/
 	//puts the array of root nodes, which are in the "data" array, into jsonHier
 	//call initial_hiearchy
-					SpeciesDataProviderModule.queryeBirdTaxonomyRoots({}, function (data){
-        	    		  jsonHier=JSON.parse(data);
-        	    		  jsonHier=jsonHier["data"];
-        	    		  initial_hierachy();
-        	    		  
-        	    		          	    		  
-        	       }
-        	       );
+//					SpeciesDataProviderModule.queryeBirdTaxonomyRoots({}, function (data){
+//        	    		  jsonHier=JSON.parse(data);
+//        	    		  jsonHier=jsonHier["data"];
+//        	    		  initial_hierachy();
+//        	       }
+//        	       );
         	});
  
  //var class_hierachy=[["Aves",null],["Accipiter","Aves"],["Acanthis","Aves"],["Aechmophorus","Aves"],["sharpShinnedHawk","Accipiter"],["commonRedpoll","Acanthis"]];
@@ -474,6 +465,7 @@ function choose(str){
 	//clears the show div
 	document.getElementById('show').innerHTML="";
 	//this does not change selection, you still need to hit search, so the method for that is handled in the .jsp file where search_node is called.
+	search_node();
 }
 
 /*find where this node is*/
@@ -489,8 +481,10 @@ function search_node(){
 			}
 			else{
 				var evt = document.createEvent("MouseEvents");  
-	 				evt.initEvent("click", true, true);  
-			  	    document.getElementById(i).childNodes[1].dispatchEvent(evt);  
+				evt.initEvent("click", true, true);
+				var elem = document.getElementById(i);
+				elem.childNodes[1].dispatchEvent(evt);
+				$("#description").animate({scrollTop: $(elem).offset().top+'px'}, 'fast');
 			}
 			//alert(" found !");
 			break;
@@ -502,5 +496,3 @@ function search_node(){
 	 document.getElementById('search_info').value="";
 	 document.getElementById('show').innerHTML="";
 }
-</body>
-</html>
