@@ -61,25 +61,17 @@
     	<module>characteristics</module>
 	<module>industry</module>
 	<module>debugger</module>
-	<module>annotator</module>
 	<module>provenance</module>
-	<module>semanteco-geo-facet</module>
-  <module>semanteco-squirrel-facet</module>
+        <module>semanteco-health</module>
       </modules>
     </profile>
     <profile>
       <id>parent-only</id>
     </profile>
   </profiles>
-  <modules>
-    <module>semanteco-darrin</module>
-    <module>semanteco-health</module>
-    <module>semanteco-squirrel-facet</module>
-    <module>dataone-solr</module>
-    <module>sample-faceted-module</module>
-  </modules>
 
   <build>
+    <defaultGoal>install</defaultGoal>
     <pluginManagement>
       <plugins>
         <plugin>
